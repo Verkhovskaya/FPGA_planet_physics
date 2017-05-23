@@ -17,24 +17,24 @@ module gravity_simulator (
 
   always @(posedge clock) begin
 		if (reset) begin
-			clock_counter = 27'b0;
-			object_select = 3'b0;
-      x_pos_all[0] = 7'd10;
-      y_pos_all[0] = 6'd10;
-      x_pos_all[1] = 7'd10;
-      y_pos_all[1] = 6'd20;
-      x_pos_all[2] = 7'd20;
-      y_pos_all[2] = 6'd20;
-      x_pos_all[3] = 7'd20;
-      y_pos_all[3] = 6'd10;
-      x_pos_all[4] = 7'd50;
-      y_pos_all[4] = 6'd50;
-      x_pos_all[5] = 7'd30;
-      y_pos_all[5] = 6'd30;
-      x_pos_all[6] = 7'd40;
-      y_pos_all[6] = 6'd40;
-      x_pos_all[7] = 7'd40;
-      y_pos_all[7] = 6'd50;
+			clock_counter = 50'b0;
+			object_select = 53'b0;
+      x_pos_all[0] = 7'd37;
+      y_pos_all[0] = 6'd30;
+      x_pos_all[1] = 7'd32;
+      y_pos_all[1] = 6'd30;
+      x_pos_all[2] = 7'd37;
+      y_pos_all[2] = 6'd30;
+      x_pos_all[3] = 7'd33;
+      y_pos_all[3] = 6'd30;
+      x_pos_all[4] = 7'd30;
+      y_pos_all[4] = 6'd30;
+      x_pos_all[5] = 7'd35;
+      y_pos_all[5] = 6'd38;
+      x_pos_all[6] = 7'd30;
+      y_pos_all[6] = 6'd33;
+      x_pos_all[7] = 7'd30;
+      y_pos_all[7] = 6'd32;
 
       x_vel_all[0] = 14'b0;
       y_vel_all[0] = 14'b0;
@@ -49,6 +49,7 @@ module gravity_simulator (
       x_vel_all[5] = 14'b0;
       y_vel_all[5] = 14'b0;
       x_vel_all[6] = 14'b0;
+
       y_vel_all[6] = 14'b0;
       x_vel_all[7] = 14'b0;
       y_vel_all[7] = 14'b0;
@@ -224,16 +225,16 @@ module gravity_simulator (
 
   always @(*) begin
     if (new_x_velocity[13] == 1'b0)
-      new_x_position = x_pos_object + {3'b000, x_vel_object[12:10]};
+      new_x_position = x_pos_object + {3'b00, new_x_velocity[12:8]};
     else
-      new_x_position = x_pos_object + {2'b11, x_vel_object[13:10]};
+      new_x_position = x_pos_object + {2'b11, new_x_velocity[13:8]};
   end
 
   always @(*) begin
     if (new_y_velocity[13] == 1'b0)
-      new_y_position = y_pos_object + {3'b000, y_vel_object[12:10]};
+      new_y_position = y_pos_object + {2'b00, new_y_velocity[12:8]};
     else
-      new_y_position = y_pos_object + {2'b11, y_vel_object[13:10]};
+      new_y_position = y_pos_object + {1'b1, new_y_velocity[13:8]};
   end
 
   reg [7:0] to_scope_reg;
@@ -242,22 +243,24 @@ module gravity_simulator (
 
   always @(posedge clock) begin
     if (clock_counter[22:20] == 3'b000)
-      to_scope_reg = 8'b11111111;
+      to_scope_reg = 8'b11000000;
     else if (clock_counter[22:20] == 3'b001)
       to_scope_reg = {5'b0, object_select};
     else if (clock_counter[22:20] == 3'b010)
-      to_scope_reg = 8'b11111111;
+      to_scope_reg = 8'b11000000;
     else if (clock_counter[22:20] == 3'b011)
-      to_scope_reg = 8'b11111111;
+      to_scope_reg = 8'b11000000;
     else if (clock_counter[22:20] == 3'b100)
-      to_scope_reg = 8'b11111111;
+      to_scope_reg = 8'b11000000;
     else if (clock_counter[22:20] == 3'b101)
-      to_scope_reg = 8'b11111111;
-    else if (clock_counter[22:20] == 3'b110)f
-      to_scope_reg = {2'b0, y_pos_object};
-    else if (clock_counter[22:20] == 3'b111)
       to_scope_reg = {1'b0, x_pos_object};
+    else if (clock_counter[22:20] == 3'b110)
+      to_scope_reg =  8'b11000000;
+    else if (clock_counter[22:20] == 3'b111)
+      to_scope_reg = {2'b0, y_pos_object};
   end
+
+  //to_scope_reg = x_pos_object
 
 
 endmodule

@@ -14,14 +14,14 @@ module force_calculator (
   wire y_sign;
 
   always @(*) begin
-    if ({1'b0,x_pos_object} > {1'b0, x_pos_other})
+    if (x_pos_object >  x_pos_other)
       x_dist = x_pos_object-x_pos_other;
     else
       x_dist = x_pos_other-x_pos_object;
   end
 
   always @(*) begin
-    if ({1'b0,y_pos_object} > {0,y_pos_other})
+    if (y_pos_object > y_pos_other)
       y_dist = y_pos_object - y_pos_other;
     else
       y_dist = y_pos_other - y_pos_object;
@@ -59,14 +59,14 @@ module force_calculator (
   assign x_force = x_force_reg; //5.8, signed
 
   always @(*) begin
-    if ({1'b0,x_pos_object} > {1'b0, x_pos_other})
+    if (x_pos_other > x_pos_object)
       x_force_reg = {3'b0, abs_force_x};
     else
       x_force_reg = -{3'b0, abs_force_x};
   end
 
   always @(*) begin
-    if ({1'b0,y_pos_object} > {0,y_pos_other})
+    if (y_pos_other > y_pos_object)
       y_force_reg = {3'b0, abs_force_y};
     else
       y_force_reg = -{3'b0, abs_force_y};

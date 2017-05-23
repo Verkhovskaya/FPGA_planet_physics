@@ -42,18 +42,18 @@ display = Display()
 
 objects = []
 
-objects.append([x,y,0,0]) #x, y, velocity_x, velocity_y
-objects.append([x,y,0,0])
-objects.append([x,y,0,0])
-objects.append([x,y,0,0])
-objects.append([x,y,0,0])
-objects.append([x,y,0,0])
-objects.append([x,y,0,0])
-objects.append([x,y,0,0])
+objects.append([10,10, 0, 0]) #x, y, velocity_x, velocity_y
+objects.append([30,25, 0, 0])
+objects.append([48,38, 0, 0])
+objects.append([18,40, 0, 0])
+objects.append([38,37, 0, 0])
+objects.append([85,87, 0, 0])
+objects.append([92,47, 0, 0])
+objects.append([25,23, 0, 0])
 
 
 time1 = time.time()
-data = open("python_created_data.txt")
+#data = open("python_created_data.txt")
 
 for i in range(1000):
     for main in range(len(objects)):
@@ -87,19 +87,20 @@ for i in range(1000):
             objects[main][1] -= y_size * (int(objects[main][1])/y_size) #Keep objects in the frame
             objects[main][3] = 0 #To avoid a flinging effect from skipping to the opposite side.
 
-    display.clear()
+    #display.clear()
     for each in objects:
 
 
-        display.add(each[0], each[1])
+        #display.add(each[0], each[1])
         print each[2],each[3]
         #print(str(each[0]) + " " + str(each[1]) + " " + str(each[2]) + " " + str(each[3]))
     #display.show()
     if i < 100:
         None
-        display.save(output_file)
+        #display.save(output_file)
         #Commented out when measuring timing
 
 time2 = time.time()
 
+print "time (s): ",
 print time2 - time1
